@@ -3,8 +3,11 @@ enum GameAction {
 	MoveX;
 	MoveY;
 
+
 	Jump;
 	Restart;
+
+	Shoot;
 
 	MenuCancel;
 	Pause;

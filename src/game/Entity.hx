@@ -2,6 +2,10 @@ class Entity {
     public static var ALL : Array<Entity> = [];
     public static var GC : Array<Entity> = [];
 
+	public var saying: Null<h2d.Flow>;
+	public var sayingText: Null<h2d.Text>;
+	public var removeSaying: Bool;
+
 	// Various getters to access all important stuff easily
 	public var app(get,never) : App; inline function get_app() return App.ME;
 	public var game(get,never) : Game; inline function get_game() return Game.ME;
@@ -14,6 +18,14 @@ class Entity {
 	var tmod(get,never) : Float; inline function get_tmod() return Game.ME.tmod;
 	var utmod(get,never) : Float; inline function get_utmod() return Game.ME.utmod;
 	public var hud(get,never) : ui.Hud; inline function get_hud() return Game.ME.hud;
+
+		// Coordinates getters, for easier gameplay coding
+	public var footX(get,never) : Float; inline function get_footX() return (cx+xr)*Const.GRID;
+	public var footY(get,never) : Float; inline function get_footY() return (cy+yr)*Const.GRID;
+	public var headX(get,never) : Float; inline function get_headX() return footX;
+	public var headY(get,never) : Float; inline function get_headY() return footY-hei;
+	public var centerX(get,never) : Float; inline function get_centerX() return footX;
+	public var centerY(get,never) : Float; inline function get_centerY() return footY-hei*0.5;
 
 	/** Cooldowns **/
 	public var cd : dn.Cooldown;
@@ -178,10 +190,6 @@ class Entity {
 	/** Bottom pixel coordinate of the bounding box **/
 	public var bottom(get,never) : Float; inline function get_bottom() return attachY + (1-pivotY) * hei;
 
-	/** Center X pixel coordinate of the bounding box **/
-	public var centerX(get,never) : Float; inline function get_centerX() return attachX + (0.5-pivotX) * wid;
-	/** Center Y pixel coordinate of the bounding box **/
-	public var centerY(get,never) : Float; inline function get_centerY() return attachY + (0.5-pivotY) * hei;
 
 	/** Current X position on screen (ie. absolute)**/
 	public var screenAttachX(get,never) : Float;
@@ -376,9 +384,15 @@ class Entity {
 	/** Create a LRect instance from current entity bounds **/
 	public inline function createRect() return tools.LRect.fromPixels( Std.int(left), Std.int(top), Std.int(wid), Std.int(hei) );
 
+	public function beforeDestroy(){
+
+	}
+
     public final function destroy() {
         if( !destroyed ) {
+			beforeDestroy();
             destroyed = true;
+			clearSaying();
             GC.push(this);
         }
     }
@@ -652,6 +666,7 @@ class Entity {
 		Post-update loop, which is guaranteed to happen AFTER any preUpdate/update. This is usually where render and display is updated
 	**/
     public function postUpdate() {
+		sayUpdate();
 		spr.x = sprX;
 		spr.y = sprY;
         spr.scaleX = dir*sprScaleX * sprSquashX;
@@ -776,4 +791,50 @@ class Entity {
 	**/
     public function update() {
     }
+
+	function clearSaying() {
+		if( saying!=null ) {
+			saying.remove();
+			removeSaying = false;
+			saying = null;
+		}
+	}
+	public function removeSay(){
+		if(saying!=null){
+			removeSaying=true;
+		}
+	}
+	public function say(str:String, c=0xffffff){
+		if(saying!=null)return;
+		clearSaying();
+
+		saying = new h2d.Flow();
+		game.scroller.add(saying, Const.DP_UI);
+		cd.setS("keepSaying",2.5 + str.length*0.05);
+		saying.scaleX = 2;
+		saying.scaleY = 1;
+		saying.layout = Vertical;
+		saying.horizontalAlign = Middle;
+		saying.verticalSpacing = 3;
+
+		sayingText = new h2d.Text(Assets.fontPixel, saying);
+		sayingText.filter = new dn.heaps.filter.PixelOutline(0x00000, 1);
+		sayingText.maxWidth = 60;
+		sayingText.text = str;
+		sayingText.textColor = c;
+
+	}
+	function sayUpdate(){
+		if( saying!=null ) {
+			saying.scaleX += (1-saying.scaleX) * M.fmin(1, 0.3*tmod);
+			saying.scaleY += (1-saying.scaleY) * M.fmin(1, 0.3*tmod);
+			saying.x = Std.int( headX - saying.outerWidth*0.5*saying.scaleX );
+			saying.y = Std.int( headY - saying.outerHeight*.65*saying.scaleY );
+			if(removeSaying) {
+				saying.alpha-=0.03*tmod;
+				if( saying.alpha<=0 )
+					clearSaying();
+			}
+		}
+	}
 }

@@ -1,5 +1,7 @@
 package ui;
 
+import hxd.snd.Manager.Source;
+
 class Console extends h2d.Console {
 	public static var ME : Console;
 	#if debug
@@ -67,6 +69,9 @@ class Console extends h2d.Console {
 		#if debug
 		this.addCommand("drone", [], ()->{
 			new en.DebugDrone();
+		});
+		this.addCommand("turret", [], ()->{
+			Game.ME.turretBuff = 0.5;
 		});
 		#end
 

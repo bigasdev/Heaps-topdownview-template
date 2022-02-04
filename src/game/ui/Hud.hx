@@ -55,12 +55,11 @@ class Hud extends dn.Process {
 		// Bg
 		var t = Assets.tiles.getTile( D.tiles.uiBar );
 		var f = new dn.heaps.FlowBg(t, 2, root);
-		f.colorizeBg(color);
 		f.paddingHorizontal = 6;
 		f.paddingBottom = 4;
 		f.paddingTop = 2;
 		f.paddingLeft = 9;
-		f.y = 4;
+		f.y = 6;
 
 		// Text
 		var tf = new h2d.Text(Assets.fontPixel, f);
@@ -89,7 +88,6 @@ class Hud extends dn.Process {
 			notifTw.createS(f.y, y, TEaseOut, 0.2);
 			y+=f.outerHeight+1;
 		}
-
 	}
 
 	public inline function invalidate() invalidated = true;

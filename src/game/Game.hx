@@ -5,6 +5,11 @@ class Game extends Process {
 
 	public var app(get,never) : App; inline function get_app() return App.ME;
 
+	public var hero: en.Hero;
+	public var enemies : Array<Enemy> = [];
+
+	public var turretBuff=0.;
+
 	/** Game controller (pad or keyboard) **/
 	public var ca : ControllerAccess<GameAction>;
 
@@ -27,6 +32,17 @@ class Game extends Process {
 	var curGameSpeed = 1.0;
 	var slowMos : Map<String, { id:String, t:Float, f:Float }> = new Map();
 
+	public function onGameStart(){
+		debug("Game Started!");
+		spawnEnemy();
+	}
+	public function spawnEnemy(){
+		var e = new en.Enemy(1);
+		e.setPosCase(level.data.l_Entities.all_Enemy[0].cx,level.data.l_Entities.all_Enemy[0].cy);
+		e.nextWaypoint = level.data.l_Entities.all_Waypoint[0];
+		enemies.push(e);
+		cd.setS("Spawned",2);
+	}
 
 	public function new() {
 		super(App.ME);
@@ -66,6 +82,7 @@ class Game extends Process {
 		for(e in Entity.ALL) // <---- Replace this with more adapted entity destruction (eg. keep the player alive)
 			e.destroy();
 		garbageCollectEntities();
+		trace(l.toString());
 
 		level = new Level(l);
 		// <---- Here: instanciate your level entities
@@ -209,6 +226,10 @@ class Game extends Process {
 		// Entities main loop
 		for(e in Entity.ALL) if( !e.destroyed ) e.update();
 
+		if(!cd.has("Spawned") && hero.gameStarted){
+			spawnEnemy();
+		}
+
 
 		// Global key shortcuts
 		if( !App.ME.anyInputHasFocus() && !ui.Modal.hasAny() && !Console.ME.isActive() ) {
@@ -233,6 +254,12 @@ class Game extends Process {
 				App.ME.startGame();
 
 		}
+	}
+
+	public function debug(str:String){
+		#if debug
+		trace(str);
+		#end
 	}
 }
 

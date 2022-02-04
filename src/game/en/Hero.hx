@@ -1,4 +1,4 @@
-package sample;
+package en;
 
 /**
 	SamplePlayer is an Entity with some extra functionalities:
@@ -8,9 +8,18 @@ package sample;
 	- some squash animations, because it's cheap and they do the job
 **/
 
-class SamplePlayer extends Entity {
+class Hero extends Entity {
 	var ca : ControllerAccess<GameAction>;
 	var walkSpeed = 0.;
+	var walkSpeedY = 0.;
+	var anims = dn.heaps.assets.Aseprite.getDict(hxd.Res.atlas.hero);
+
+	public var turret:en.Turret;
+	public var gameStarted:Bool;
+
+	public function closeToTurret() : Bool{
+		return turret != null;
+	}
 
 	// This is TRUE if the player is not falling
 	var onGround(get,never) : Bool;
@@ -26,8 +35,8 @@ class SamplePlayer extends Entity {
 			setPosCase(start.cx, start.cy);
 
 		// Misc inits
-		frictX = 0.84;
-		frictY = 0.94;
+		frictX = 0;
+		frictY = 0;
 
 		// Camera tracks this
 		camera.trackEntity(this, true);
@@ -38,9 +47,13 @@ class SamplePlayer extends Entity {
 		ca.lockCondition = Game.isGameControllerLocked;
 
 		// Placeholder display
-		var g = new h2d.Graphics(spr);
-		g.beginFill(0x00ff00);
-		g.drawCircle(0,-hei*0.5,9);
+		spr.set(Assets.hero);
+		spr.set("Idle");
+		spr.filter = new dn.heaps.filter.PixelOutline(0x00000, 1);
+		spr.anim.registerStateAnim(anims.Walk,1,1,()->M.fabs(dxTotal)>0.05);
+		spr.anim.registerStateAnim(anims.Idle,1,1,()->M.fabs(dxTotal)<0.04);
+
+		Game.ME.scroller.add(spr, Const.DP_FRONT);
 	}
 
 
@@ -48,7 +61,17 @@ class SamplePlayer extends Entity {
 		super.dispose();
 		ca.dispose(); // don't forget to dispose controller accesses
 	}
-
+	function turretStuff(){
+		if(closeToTurret()){
+			turret.spr.alpha = 1;
+			turret.say("Build your first turret here", Color.randomColor());
+			var d = distCase(turret);
+			if(d > 1.75){
+				turret.removeFromPlayer();
+				turret = null;
+			}
+		}
+	}
 
 	/** X collisions **/
 	override function onPreStepX() {
@@ -70,15 +93,12 @@ class SamplePlayer extends Entity {
 
 		// Land on ground
 		if( yr>1 && level.hasCollision(cx,cy+1) ) {
-			setSquashY(0.5);
 			dy = 0;
 			yr = 1;
-			ca.rumble(0.2, 0.06);
-			onPosManuallyChanged();
 		}
 
 		// Ceiling collision
-		if( yr<0.2 && level.hasCollision(cx,cy-1) )
+		if( yr<0.2 && level.hasCollision(cx,cy-2) )
 			yr = 0.2;
 	}
 
@@ -91,38 +111,63 @@ class SamplePlayer extends Entity {
 		super.preUpdate();
 
 		walkSpeed = 0;
-		if( onGround )
-			cd.setS("recentlyOnGround",0.1); // allows "just-in-time" jumps
+		walkSpeedY = 0;
+		/*if( onGround )
+			cd.setS("recentlyOnGround",0.1); // allows "just-in-time" jumps*/
 
 
 		// Jump
-		if( cd.has("recentlyOnGround") && ca.isPressed(Jump) ) {
+		/*if( cd.has("recentlyOnGround") && ca.isPressed(Jump) ) {
 			dy = -0.85;
 			setSquashX(0.6);
 			cd.unset("recentlyOnGround");
 			fx.dotsExplosionExample(centerX, centerY, 0xffcc00);
 			ca.rumble(0.05, 0.06);
+		}*/
+
+		if(!cd.has("shoot") && ca.isPressed(Shoot)){
+			if(!closeToTurret())return;
+			if(!gameStarted){
+				gameStarted = true;
+				game.onGameStart();
+			}
+			cd.setS("shoot", .2);
 		}
 
 		// Walk
-		if( ca.getAnalogDist(MoveX)>0 ) {
+		if( ca.getAnalogDist(MoveX)>0) {
 			// As mentioned above, we don't touch physics values (eg. `dx`) here. We just store some "requested walk speed", which will be applied to actual physics in fixedUpdate.
 			walkSpeed = ca.getAnalogValue(MoveX); // -1 to 1
+		}
+
+		if( ca.getAnalogDist(MoveY)>0){
+
+			walkSpeedY = ca.getAnalogValue(MoveY);
 		}
 	}
 
 
 	override function fixedUpdate() {
 		super.fixedUpdate();
+		turretStuff();
 
 		// Gravity
-		if( !onGround )
-			dy+=0.05;
+		/*if( !onGround )
+			dy+=0.05;*/
+
+		var speed = 0.25;
+
+		if( walkSpeed!=0 && walkSpeedY!=0){
+			speed = 0.15;
+		}
 
 		// Apply requested walk movement
 		if( walkSpeed!=0 ) {
-			var speed = 0.045;
 			dx += walkSpeed * speed;
+		}
+
+		if(walkSpeedY!=0){
+			dy += walkSpeedY * speed;
 		}
 	}
 }

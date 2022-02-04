@@ -4,7 +4,7 @@ import dn.data.GetText;
 
 class Lang {
     static var _initDone = false;
-    static var DEFAULT = "en";
+    static var DEFAULT = "pt-br";
     public static var CUR = "??";
     public static var t : GetText;
 
