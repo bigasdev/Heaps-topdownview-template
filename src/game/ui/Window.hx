@@ -31,6 +31,8 @@ class Window extends dn.Process {
 	override function onResize() {
 		super.onResize();
 
+		
+
 		root.scale(Const.UI_SCALE);
 
 		var w = M.ceil( w()/Const.UI_SCALE );

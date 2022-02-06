@@ -28,6 +28,7 @@ class Enemy extends Entity {
 		spr.filter = new dn.heaps.filter.PixelOutline(0x00000, 1);
 		spr.setCenterRatio(0.5,0.5);
 		spr.alpha = 1;
+		Game.ME.scroller.add(spr, Const.DP_MAIN);
 
 		initLife(3);
 
@@ -56,6 +57,8 @@ class Enemy extends Entity {
 	}
 	override function beforeDestroy(){
 		game.enemies.remove(this);
+		new Coin(cx,cy);
+		fx.bigExplode(cx,cy);
 	}
 
 	override function fixedUpdate() {

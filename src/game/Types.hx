@@ -12,9 +12,18 @@ enum GameAction {
 	MenuCancel;
 	Pause;
 
+	Start;
+
 	DebugTurbo;
 	DebugSlowMo;
 	ScreenshotMode;
+}
+
+enum Waypoints {
+	First;
+	Second;
+	Third;
+	Forth;
 }
 
 enum Affect {

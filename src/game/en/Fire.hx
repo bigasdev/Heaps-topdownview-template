@@ -18,7 +18,7 @@ class Fire extends Entity {
 
 		// Placeholder display
 		spr.set(Assets.tiles);
-		spr.set("fxImpact1");
+		spr.set("rocket");
 		spr.filter = new dn.heaps.filter.PixelOutline(0x00000, 1);
 		spr.setCenterRatio(0.5,0.5);
 		spr.alpha = 1;
@@ -64,7 +64,7 @@ class Fire extends Entity {
 				}
 			}
 
-			if(d < 1){
+			if(d < 1.25){
 				enemy.hit(1, this);
 				destroy();
 			}

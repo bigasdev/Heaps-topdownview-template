@@ -14,6 +14,8 @@ class Hero extends Entity {
 	var walkSpeedY = 0.;
 	var anims = dn.heaps.assets.Aseprite.getDict(hxd.Res.atlas.hero);
 
+	public var coins=0;
+
 	public var turret:en.Turret;
 	public var gameStarted:Bool;
 
@@ -110,6 +112,8 @@ class Hero extends Entity {
 	override function preUpdate() {
 		super.preUpdate();
 
+		if(!game.isPlaying)return;
+
 		walkSpeed = 0;
 		walkSpeedY = 0;
 		/*if( onGround )
@@ -127,6 +131,8 @@ class Hero extends Entity {
 
 		if(!cd.has("shoot") && ca.isPressed(Shoot)){
 			if(!closeToTurret())return;
+			turret.enableTurret();
+			game.debug(Std.string(game.drop.dropSeed.random(15)));
 			if(!gameStarted){
 				gameStarted = true;
 				game.onGameStart();

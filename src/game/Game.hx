@@ -1,3 +1,4 @@
+import h2d.Text;
 import dn.Process;
 
 class Game extends Process {
@@ -19,6 +20,9 @@ class Game extends Process {
 	/** Basic viewport control **/
 	public var camera : Camera;
 
+	/** Drop manager* */
+	public var drop : en.Drop;
+
 	/** Container of all visual game objects. Ths wrapper is moved around by Camera. **/
 	public var scroller : h2d.Layers;
 
@@ -27,6 +31,16 @@ class Game extends Process {
 
 	/** UI **/
 	public var hud : ui.Hud;
+
+	public var options: Array<InteractableData> = [];
+	public var perkTitle: h2d.Text;
+
+
+	// Bool for the game loop
+	public var isPlaying:Bool;
+
+	//Value for the turrets
+	public var turrets=0;
 
 	/** Slow mo internal values**/
 	var curGameSpeed = 1.0;
@@ -37,11 +51,13 @@ class Game extends Process {
 		spawnEnemy();
 	}
 	public function spawnEnemy(){
-		var e = new en.Enemy(1);
-		e.setPosCase(level.data.l_Entities.all_Enemy[0].cx,level.data.l_Entities.all_Enemy[0].cy);
-		e.nextWaypoint = level.data.l_Entities.all_Waypoint[0];
-		enemies.push(e);
-		cd.setS("Spawned",2);
+		for(i in 0...turrets){
+			var e = new en.Enemy(1);
+			e.setPosCase(level.data.l_Entities.all_Enemy[i].cx,level.data.l_Entities.all_Enemy[i].cy);
+			e.nextWaypoint = level.data.l_Entities.all_Waypoint[0];
+			enemies.push(e);
+		}
+		cd.setS("Spawned",1.5);
 	}
 
 	public function new() {
@@ -52,6 +68,10 @@ class Game extends Process {
 		ca.lockCondition = isGameControllerLocked;
 		createRootInLayers(App.ME.root, Const.DP_BG);
 
+		isPlaying = false;
+
+		drop = new en.Drop(531);
+
 		scroller = new h2d.Layers();
 		root.add(scroller, Const.DP_BG);
 		scroller.filter = new h2d.filter.Nothing(); // force rendering for pixel perfect
@@ -60,9 +80,96 @@ class Game extends Process {
 		hud = new ui.Hud();
 		camera = new Camera();
 
+		createInteractable();
+
+		hud.jamText();
+		hud.coinsTextGen();
+
 		startLevel(Assets.worldData.all_levels.FirstLevel);
 	}
 
+
+	public function createInteractable(){
+		var n = 30;
+
+
+		var tf = new h2d.Text(Assets.fontPixel);
+		tf.text = "Select your perk!";
+		tf.filter = new dn.heaps.filter.PixelOutline(0x00000, 1);
+		tf.dropShadow = {dx:1,dy:1,color:0,alpha:1};
+		tf.scaleX = 5;
+		tf.scaleY = 5;
+		tf.x = 180;
+		tf.y = 30;
+		root.add(tf, Const.DP_UI);
+		perkTitle = tf;
+
+
+		for(i in 0...3){
+			var i = new h2d.Interactive(240,280);
+			i.onClick = function(_) selectOption();
+			var tf = new h2d.Graphics();
+			tf.scaleX = 10;
+			tf.scaleY = 10;
+			tf.x = Std.int(n);
+			tf.y = Std.int(150);
+			n = n + 250;
+			i.x = tf.x;
+			i.y = tf.y;
+			i.backgroundColor = Color.randomColor();
+			var s = Assets.tiles.h_get(Assets.tilesDict.interactable, tf);
+			root.add(i, Const.DP_UI);
+			root.add(tf, Const.DP_UI);
+
+
+			var t = new h2d.Text(Assets.fontPixel);
+			t.text = "Test Perk";
+			t.filter = new dn.heaps.filter.PixelOutline(0x00000, 1);
+			t.dropShadow = {dx:.5,dy:1,color:0,alpha:.75};
+			t.scaleX = 2;
+			t.scaleY = 2;
+			t.x = tf.x + 8;
+			t.y = tf.y + 10;
+			root.add(t, Const.DP_UI);
+
+			var tx = new h2d.Text(Assets.fontPixel);
+			tx.text = "Test perk! select this perk for something, later this will be changed to buffs and nerfs for the core of the game";
+			tx.filter = new dn.heaps.filter.PixelOutline(0x00000, 1);
+			tx.dropShadow = {dx:.5,dy:1,color:0,alpha:.75};
+			tx.scaleX = 1;
+			tx.scaleY = 1;
+			tx.x = tf.x + 18;
+			tx.maxWidth = 190;
+			tx.y = tf.y + 75;
+			root.add(tx, Const.DP_UI);
+
+
+			i.onOver = function(_){
+				s = Assets.tiles.h_get(Assets.tilesDict.interactableSelected, tf);
+				t.textColor = Color.hexToInt("#FFFF00");
+				tx.textColor = Color.hexToInt("#FFFF00");
+			}
+			i.onOut = function(_){
+				s = Assets.tiles.h_get(Assets.tilesDict.interactable, tf);
+				t.textColor = Color.hexToInt("#FFFFFF");
+				tx.textColor = Color.hexToInt("#FFFFFF");
+			}
+			
+			var d = new InteractableData(i,tf, t, tx);
+			options.push(d);
+		}
+	}
+
+	public function selectOption(){
+		for(i in options){
+			root.removeChild(i.button);
+			root.removeChild(i.sprite);
+			root.removeChild(i.textX);
+			root.removeChild(i.textY);
+		}
+		root.removeChild(perkTitle);
+		isPlaying = true;
+	}
 
 	public static function isGameControllerLocked() {
 		return !exists() || ME.isPaused() || App.ME.anyInputHasFocus();
@@ -260,6 +367,20 @@ class Game extends Process {
 		#if debug
 		trace(str);
 		#end
+	}
+}
+
+class InteractableData{
+	public var button:h2d.Interactive;
+	public var sprite:h2d.Graphics;
+	public var textX:h2d.Text;
+	public var textY:h2d.Text;
+
+	public function new(x:h2d.Interactive,y:h2d.Graphics,z:h2d.Text,c:h2d.Text){
+		button = x;
+		sprite = y;
+		textX = z;
+		textY = c;
 	}
 }
 

@@ -89,7 +89,8 @@ class App extends dn.Process {
 
 	final function _createGameInstance() {
 		// new Game(); // <---- Uncomment this to start an empty Game instance
-		new sample.SampleGame(); // <---- Uncomment this to start the Sample Game instance
+		//new sample.SampleGame(); // <---- Uncomment this to start the Sample Game instance
+		new Title();
 	}
 
 
@@ -192,6 +193,7 @@ class App extends dn.Process {
 		// Gamepad bindings
 		controller.bindPadLStick(MoveX,MoveY);
 		controller.bindPad(Jump, A);
+		controller.bindPad(Start, A);
 		controller.bindPad(Restart, SELECT);
 		controller.bindPad(Pause, START);
 		controller.bindPadButtonsAsStick(MoveX, MoveY, DPAD_UP, DPAD_LEFT, DPAD_DOWN, DPAD_RIGHT);
@@ -203,6 +205,8 @@ class App extends dn.Process {
 		controller.bindKeyboard(Jump, K.SPACE);
 		controller.bindKeyboard(Shoot, K.E);
 		controller.bindKeyboard(Restart, K.R);
+		controller.bindKeyboard(Start, K.SPACE);
+		controller.bindKeyboard(Start, K.ENTER);
 		controller.bindKeyboard(ScreenshotMode, K.F9);
 		controller.bindKeyboard(Pause, K.P);
 		controller.bindKeyboard(Pause, K.PAUSE_BREAK);

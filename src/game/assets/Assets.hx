@@ -12,9 +12,12 @@ class Assets {
 	/** Main atlas **/
 	public static var tiles : SpriteLib;
 	public static var hero : SpriteLib;
+	public static var explosion : SpriteLib;
 
 	/** LDtk world data **/
 	public static var worldData : World;
+	public static var tilesDict = dn.heaps.assets.Aseprite.getDict(hxd.Res.atlas.tiles);
+	public static var explosionDict = dn.heaps.assets.Aseprite.getDict(hxd.Res.atlas.explosion);
 
 
 	static var _initDone = false;
@@ -29,6 +32,7 @@ class Assets {
 		// build sprite atlas directly from Aseprite file
 		tiles = dn.heaps.assets.Aseprite.convertToSLib(Const.FPS, hxd.Res.atlas.tiles.toAseprite());
 		hero = dn.heaps.assets.Aseprite.convertToSLib(Const.FPS, hxd.Res.atlas.Hero.toAseprite());
+		explosion = dn.heaps.assets.Aseprite.convertToSLib(Const.FPS, hxd.Res.atlas.explosion.toAseprite());
 
 		// CastleDB file hot reloading
 		#if debug

@@ -217,7 +217,7 @@ class Entity {
 		initLife(1);
 
         spr = new HSprite(Assets.tiles);
-		Game.ME.scroller.add(spr, Const.DP_MAIN);
+		//Game.ME.scroller.add(spr, Const.DP_MAIN);
 		spr.colorAdd = new h3d.Vector();
 		baseColor = new h3d.Vector();
 		blinkColor = new h3d.Vector();
@@ -252,6 +252,7 @@ class Entity {
 		if( !isAlive() || dmg<=0 )
 			return;
 
+		fx.explode(cx,cy);
 		life = M.iclamp(life-dmg, 0, maxLife);
 		lastDmgSource = from;
 		onDamage(dmg, from);

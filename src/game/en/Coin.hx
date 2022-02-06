@@ -2,52 +2,34 @@ package en;
 
 
 
-class Turret extends Entity {
-	var number: Int;
-	var shootCd=1;
-
-	public var enabled:Bool;
+class Coin extends Entity {
+	public var player:Hero;
+	var speed=0.3;
 
 	// This is TRUE if the player is not falling
 
-	public function new(x:Int) {
-		super(5,5);
+	public function new(x:Int,y:Int) {
+		super(x,y);
 
 		// Start point using level entity "PlayerStart"
-		var start = level.data.l_Entities.all_Turret[x];
-		if( start!=null )
-			setPosCase(start.cx, start.cy);
 
 
-		number = start.f_Integer;
+		//number = start.f_Integer;
 
 		// Placeholder display
 		spr.set(Assets.tiles);
-		spr.set(Std.string("turret"+number));
+		spr.set("coin");
 		spr.filter = new dn.heaps.filter.PixelOutline(0x00000, 1);
 		spr.setCenterRatio(0.5,0.5);
-		spr.alpha = .5;
-		Game.ME.scroller.add(spr, Const.DP_MAIN);
+		spr.alpha = 1;
+
+		Game.ME.scroller.add(spr, Const.DP_FRONT);
 	}
 
-	public function removeFromPlayer(){
-		if(!enabled)spr.alpha = .5;
-		removeSay();
-	}
-	public function enableTurret(){
-		if(enabled)return;
-		enabled = true;
-		game.turrets++;
-	}
 	override function dispose() {
 		super.dispose();
 	}
-	function shoot(){
-		if(game.enemies.length>0 && enabled){
-			var f = new Fire(cx, cy);
-			f.enemy = game.enemies[0];
-		}
-	}
+
 
 	/** X collisions **/
 	/** Y collisions **/
@@ -64,17 +46,29 @@ class Turret extends Entity {
 	override function fixedUpdate() {
 		super.fixedUpdate();
 
+
 		var d = distCase(game.hero);
+		if(d > 0.0015 && d < 3.25){
+			if(cx < game.hero.cx){
+				dx += speed*tmod;
+			}
+			if(cx > game.hero.cx){
+				dx -= speed*tmod;
+			}
+			if(cy < game.hero.cy){
+				dy += speed*tmod;
+			}
+			if(cy > game.hero.cy){
+				dy -= speed*tmod;
+			}
 
-		if(d < 1.5){
-			game.hero.turret = this;
+			if(d < .85){
+				game.hero.coins++;
+				fx.coinExplode(game.hero.cx,game.hero.cy);
+				destroy();
+			}
 		}
 
-		if(!cd.has("turretShoot")){
-			shoot();
-			cd.setS("turretShoot", shootCd-game.turretBuff);
-		}
-		
 		// Gravity
 		/*if( !onGround )
 			dy+=0.05;*/
