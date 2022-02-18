@@ -9,7 +9,6 @@ class Hud extends dn.Process {
 
 	var flow : h2d.Flow;
 
-	var coinsText: h2d.Text;
 
 	var invalidated = true;
 	var notifications : Array<h2d.Flow> = [];
@@ -96,28 +95,6 @@ class Hud extends dn.Process {
 			y+=f.outerHeight+1;
 		}
 	}
-	public function jamText(){
-		var tf = new h2d.Text(Assets.fontPixel);
-		tf.text = "MageJam2022";
-		tf.filter = new dn.heaps.filter.PixelOutline(0x00000, 1);
-		tf.dropShadow = {dx:1,dy:1,color: 0, alpha:1};
-		tf.maxWidth = 0.1 * w()/Const.UI_SCALE;
-		root.add(tf, Const.DP_UI);
-		tf.y = 185;
-		tf.x = 195;
-		tf.alpha = .3;
-		tf.textColor = 0xffffff;
-	}
-	public function coinsTextGen(){
-		var tf = new h2d.Text(Assets.fontPixel);
-		tf.text = "Coins: ";
-		tf.filter = new dn.heaps.filter.PixelOutline(0x00000, 1);
-		tf.textColor = 0xffffff;
-		tf.x = 220;
-		coinsText = tf;
-
-		root.add(tf, Const.DP_UI);
-	}
 
 	public inline function invalidate() invalidated = true;
 
@@ -133,7 +110,6 @@ class Hud extends dn.Process {
 	override function postUpdate() {
 		super.postUpdate();
 
-		if(coinsText!=null)coinsText.text = Std.string("Coins: " + game.hero.coins);
 
 		if( invalidated ) {
 			invalidated = false;

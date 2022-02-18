@@ -26,7 +26,6 @@ class App extends dn.Process {
 		initEngine();
 		initAssets();
 		initController();
-
 		// Create console (open with [²] key)
 		new ui.Console(Assets.fontPixel, scene); // init debug console
 
@@ -145,7 +144,7 @@ class App extends dn.Process {
 	**/
 	function initEngine() {
 		// Engine settings
-		engine.backgroundColor = 0xff<<24 | 0x111133;
+		engine.backgroundColor = Color.hexToInt("#000000");
         #if( hl && !debug )
         engine.fullScreen = true;
         #end

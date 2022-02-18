@@ -1,3 +1,5 @@
+import hl.I64;
+
 class Entity {
     public static var ALL : Array<Entity> = [];
     public static var GC : Array<Entity> = [];
@@ -26,6 +28,8 @@ class Entity {
 	public var headY(get,never) : Float; inline function get_headY() return footY-hei;
 	public var centerX(get,never) : Float; inline function get_centerX() return footX;
 	public var centerY(get,never) : Float; inline function get_centerY() return footY-hei*0.5;
+
+	public inline function angTo(e:Entity) return Math.atan2(e.centerY-centerY, e.centerX-centerX);
 
 	/** Cooldowns **/
 	public var cd : dn.Cooldown;
@@ -204,6 +208,11 @@ class Entity {
 	/** attachY value during last frame **/
 	public var prevFrameattachY(default,null) : Float = -Const.INFINITE;
 
+	//Variable for the hpBar
+	public var hpBar: Null<HpBar>;
+
+	var shadow:HSprite;
+
 	var actions : Array<{ id:String, cb:Void->Void, t:Float }> = [];
 
 
@@ -216,6 +225,7 @@ class Entity {
         setPosCase(x,y);
 		initLife(1);
 
+
         spr = new HSprite(Assets.tiles);
 		//Game.ME.scroller.add(spr, Const.DP_MAIN);
 		spr.colorAdd = new h3d.Vector();
@@ -227,6 +237,24 @@ class Entity {
 		if( ui.Console.ME.hasFlag("bounds") )
 			enableDebugBounds();
     }
+
+	public function disableShadow(){
+		if(shadow!=null){
+			shadow.remove();
+			shadow = null;
+		}
+	}
+
+	public function enableShadow(){
+		disableShadow();
+		shadow = new HSprite(spr.lib);
+		Game.ME.scroller.add(shadow, Const.DP_BG);
+		shadow.setCenterRatio(0.5,1);
+		shadow.color.r = 0;
+		shadow.color.g = 0;
+		shadow.color.b = 0;
+		shadow.alpha = 0.6;
+	}
 
 	function set_pivotX(v) {
 		pivotX = M.fclamp(v,0,1);
@@ -252,10 +280,10 @@ class Entity {
 		if( !isAlive() || dmg<=0 )
 			return;
 
-		fx.explode(cx,cy);
 		life = M.iclamp(life-dmg, 0, maxLife);
 		lastDmgSource = from;
 		onDamage(dmg, from);
+		if(hpBar!=null)hpBar.damageBar();
 		if( life<=0 )
 			onDie();
 	}
@@ -391,6 +419,9 @@ class Entity {
 
     public final function destroy() {
         if( !destroyed ) {
+			if(hpBar!= null){
+				hpBar.hpBorder.remove();
+			}
 			beforeDestroy();
             destroyed = true;
 			clearSaying();
@@ -667,12 +698,17 @@ class Entity {
 		Post-update loop, which is guaranteed to happen AFTER any preUpdate/update. This is usually where render and display is updated
 	**/
     public function postUpdate() {
+		if(!game.isPlaying)return;
 		sayUpdate();
 		spr.x = sprX;
 		spr.y = sprY;
         spr.scaleX = dir*sprScaleX * sprSquashX;
         spr.scaleY = sprScaleY * sprSquashY;
 		spr.visible = entityVisible;
+
+
+		//HP-BAR
+		if(hpBar!=null)hpBar.showBar();
 
 		sprSquashX += (1-sprSquashX) * M.fmin(1, 0.2*tmod);
 		sprSquashY += (1-sprSquashY) * M.fmin(1, 0.2*tmod);
@@ -694,6 +730,13 @@ class Entity {
 		spr.colorAdd.r += blinkColor.r;
 		spr.colorAdd.g += blinkColor.g;
 		spr.colorAdd.b += blinkColor.b;
+
+		if( shadow !=null){
+			shadow.set(spr.lib,spr.groupName,spr.frame);
+			shadow.x = footX;
+			shadow.y = footY + 1;
+			shadow.scaleY = -0.3;
+		}
 
 		// Debug label
 		if( debugLabel!=null ) {
@@ -741,6 +784,7 @@ class Entity {
 		Main loop, but it only runs at a "guaranteed" 30 fps (so it might not be called during some frames, if the app runs at 60fps). This is usually where most gameplay elements affecting physics should occur, to ensure these will not depend on FPS at all.
 	**/
 	public function fixedUpdate() {
+		if(!game.isPlaying)return;
 		updateLastFixedUpdatePos();
 
 		/*
@@ -791,6 +835,7 @@ class Entity {
 		Main loop running at full FPS
 	**/
     public function update() {
+		if(!game.isPlaying)return;
     }
 
 	function clearSaying() {
@@ -818,8 +863,7 @@ class Entity {
 		saying.horizontalAlign = Middle;
 		saying.verticalSpacing = 3;
 
-		sayingText = new h2d.Text(Assets.fontPixel, saying);
-		sayingText.filter = new dn.heaps.filter.PixelOutline(0x00000, 1);
+		sayingText = new h2d.Text(Assets.fontPixelSmall, saying);
 		sayingText.maxWidth = 60;
 		sayingText.text = str;
 		sayingText.textColor = c;
@@ -836,6 +880,49 @@ class Entity {
 				if( saying.alpha<=0 )
 					clearSaying();
 			}
+		}
+	}
+}
+class HpBar{
+	public var hpBorder : Null<h2d.Flow>;
+
+	public var following : Entity;
+	public var lifes = 0;
+
+	public function new(e:Entity){
+		hpBorder =  new h2d.Flow();
+		hpBorder.visible = true;
+		hpBorder.verticalAlign = Middle;
+		hpBorder.horizontalSpacing = 1;
+
+		following = e;
+		lifes = e.maxLife;
+
+		Game.ME.scroller.add(hpBorder, Const.DP_UI);
+		updateBar();
+	}
+	public function damageBar(){
+		lifes--;
+		updateBar();
+	}
+
+	public function showBar(){
+		if(hpBorder == null)return;
+
+		hpBorder.x = Std.int(following.spr.x - hpBorder.outerWidth*.5);
+		hpBorder.y = Std.int(following.spr.y - following.hei - hpBorder.outerHeight);
+
+		/*for(i in hpBars){
+			i.x = Std.int(following.headX - i.scaleX*.5);
+			i.y = Std.int(following.headY - i.scaleY*.5);
+		}*/
+	}
+	public function updateBar(){
+		hpBorder.removeChildren();
+		for(i in 0...lifes){
+			var a = Assets.tiles.h_get("hpBar1", hpBorder);
+			a.filter = new dn.heaps.filter.PixelOutline(0x00000, 1);
+			a.alpha = 1;
 		}
 	}
 }

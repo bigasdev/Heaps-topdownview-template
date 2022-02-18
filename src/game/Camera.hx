@@ -1,5 +1,5 @@
 class Camera extends dn.Process {
-	public static var MIN_ZOOM : Float = .75;
+	public static var MIN_ZOOM : Float = 1;
 	public static var MAX_ZOOM : Float = 10;
 
 
@@ -35,7 +35,7 @@ class Camera extends dn.Process {
 	var bumpZoomFactor = 0.;
 
 	/** Actual zoom value without modifiers **/
-	var baseZoom = .75;
+	var baseZoom = 1.;
 	var zoomSpeed = 0.0014;
 	var zoomFrict = 0.9;
 
@@ -43,10 +43,10 @@ class Camera extends dn.Process {
 	public var zoom(get,never) : Float;
 
 	/** Target base zoom value **/
-	public var targetZoom(default,set) = .75;
+	public var targetZoom(default,set) = 1.;
 
 	/** Speed multiplier when camera is tracking a target **/
-	var trackingSpeed = 1.0;
+	var trackingSpeed = 5.5;
 
 	/** If TRUE (default), the camera will try to stay inside level bounds. It cannot be done if level is smaller than actual viewport. In such case, the camera will be centered. **/
 	public var clampToLevelBounds = false;

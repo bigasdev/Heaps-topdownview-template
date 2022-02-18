@@ -4,46 +4,48 @@ package en;
 
 class Enemy extends Entity {
 	var number: Int;
-	var speed = 0.03;
-
-	public var nextWaypoint: Entity_Waypoint;
+	var speed = 0.015;
+	var diamondChance = 3;
+	public var medkitChance = 0;
 
 
 	// This is TRUE if the player is not falling
 
-	public function new(x:Int) {
+	public function new(x:Int,y:Int,h:Int) {
 		super(5,5);
 
-		// Start point using level entity "PlayerStart"
+		// Start point using level entities
 		var start = level.data.l_Entities.all_Enemy[x];
 		if( start!=null )
 			setPosCase(start.cx, start.cy);
+		
 
 
 		//number = start.f_Integer;
 
 		// Placeholder display
 		spr.set(Assets.tiles);
-		spr.set("fxCircle7");
+		spr.set("dino");
 		spr.filter = new dn.heaps.filter.PixelOutline(0x00000, 1);
-		spr.setCenterRatio(0.5,0.5);
 		spr.alpha = 1;
 		Game.ME.scroller.add(spr, Const.DP_MAIN);
 
-		initLife(3);
 
-		say("3");
+		initLife(h);
+		hpBar = new Entity.HpBar(this);
 	}
 
 	override function onDamage(dmg:Int, from:Entity){
 		blink(Color.rgbToInt(Color.WHITE));
-		sayingText.text = Std.string(life);
 	}
 
 	override function dispose() {
 		super.dispose();
 	}
-
+	override function beforeDestroy(){
+		super.beforeDestroy();
+		game.enemies.remove(this);
+	}
 
 	/** X collisions **/
 	/** Y collisions **/
@@ -55,39 +57,11 @@ class Enemy extends Entity {
 	override function preUpdate() {
 		super.preUpdate();
 	}
-	override function beforeDestroy(){
-		game.enemies.remove(this);
-		new Coin(cx,cy);
-		fx.bigExplode(cx,cy);
-	}
 
 	override function fixedUpdate() {
 		super.fixedUpdate();
 
-
-		if(nextWaypoint !=null){
-			var d = distCase(nextWaypoint.cx,nextWaypoint.cy);
-			if(d > 0.0015){
-				if(cx < nextWaypoint.cx){
-					dx += speed*tmod;
-				}
-				if(cx > nextWaypoint.cx){
-					dx -= speed*tmod;
-				}
-				if(cy < nextWaypoint.cy){
-					dy += speed*tmod;
-				}
-				if(cy > nextWaypoint.cy){
-					dy -= speed*tmod;
-				}
-			}
-			if(d > 0.1 && d < 0.3){
-				var next = level.data.l_Entities.all_Waypoint[nextWaypoint.f_Integer+1];
-				if(next != null){
-					nextWaypoint = next;
-				}
-			}
-		}
+		if(!game.isPlaying)return;
 		// Gravity
 		/*if( !onGround )
 			dy+=0.05;*/

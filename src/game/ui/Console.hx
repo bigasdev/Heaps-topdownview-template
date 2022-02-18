@@ -70,9 +70,6 @@ class Console extends h2d.Console {
 		this.addCommand("drone", [], ()->{
 			new en.DebugDrone();
 		});
-		this.addCommand("turret", [], ()->{
-			Game.ME.turretBuff = 0.5;
-		});
 		#end
 
 		// Create a stats box

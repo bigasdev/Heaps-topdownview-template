@@ -1,6 +1,7 @@
 package assets;
 
 import dn.heaps.slib.*;
+import dn.heaps.assets.*;
 
 /**
 	This class centralizes all assets management (ie. art, sounds, fonts etc.)
@@ -8,6 +9,11 @@ import dn.heaps.slib.*;
 class Assets {
 	// Fonts
 	public static var fontPixel : h2d.Font;
+	public static var fontPixelSmall : h2d.Font;
+
+	public static var SFXLib = dn.heaps.assets.SfxDirectory.load("sfx", true);
+
+	static var music: dn.heaps.Sfx;
 
 	/** Main atlas **/
 	public static var tiles : SpriteLib;
@@ -26,8 +32,10 @@ class Assets {
 			return;
 		_initDone = true;
 
+
 		// Fonts
 		fontPixel = new hxd.res.BitmapFont( hxd.Res.fonts.pixel_unicode_regular_12_xml.entry ).toFont();
+		fontPixelSmall = new hxd.res.BitmapFont( hxd.Res.fonts.minecraftiaOutline.entry).toFont();
 
 		// build sprite atlas directly from Aseprite file
 		tiles = dn.heaps.assets.Aseprite.convertToSLib(Const.FPS, hxd.Res.atlas.tiles.toAseprite());

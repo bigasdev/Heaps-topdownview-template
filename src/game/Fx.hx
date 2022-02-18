@@ -160,37 +160,6 @@ class Fx extends dn.Process {
 			p.lifeS = rnd(2,3); // life time in seconds
 		}
 	}
-	public function explode(x,y){
-		for(i in 0...2	){
-			var p = allocTopAdd(Assets.explosion.getTile(Assets.explosionDict.explosion, 0), (x+rnd(0.01,0.1))*Const.GRID, (y+rnd(0.01,0.1))*Const.GRID);
-			p.playAnimAndKill(Assets.explosion, "explosion", 1.5 * rnd(0.75,1.5));
-			//p.setFadeS(1, 0, 0.06);
-			p.lifeS = 0.15;
-			p.alpha = rnd(0.7,1);
-			p.setScale(rnd(0.1,0.5));
-		}
-	}
-	public function coinExplode(x,y){
-		for(i in 0...20){
-			var p = allocTopAdd(Assets.tiles.getTile(Assets.tilesDict.coin, 0), (x+rnd(0.2,0.9))*Const.GRID, (y+rnd(0.1,0.9))*Const.GRID);
-			p.setFadeS(1, 0, 0.06);
-			p.alpha = rnd(0.4,1);
-			p.setScale(rnd(0.1,0.3));
-			p.frict = rnd(0.8, 0.9); // friction applied to velocities
-			p.gy = rnd(0, 0.06); // gravity Y (added on each frame)
-			p.lifeS = rnd(0.5,.85); // life time in seconds
-		}
-	}
-	public function bigExplode(x,y){
-		for(i in 0...8	){
-			var p = allocTopAdd(Assets.explosion.getTile(Assets.explosionDict.explosion, 0), (x+rnd(0.2,0.9))*Const.GRID, (y+rnd(0.1,0.9))*Const.GRID);
-			p.playAnimAndKill(Assets.explosion, "explosion", 1 * rnd(0.75,1.5));
-			//p.setFadeS(1, 0, 0.06);
-			p.lifeS = 1;
-			p.setScale(rnd(0.2,0.4));
-			p.delayS = 1*i/8 - rnd(0,0.45);
-		}
-	}
 
 
 	override function update() {

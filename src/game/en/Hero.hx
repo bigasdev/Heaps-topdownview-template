@@ -10,18 +10,13 @@ package en;
 
 class Hero extends Entity {
 	var ca : ControllerAccess<GameAction>;
-	var walkSpeed = 0.;
-	var walkSpeedY = 0.;
+	public var walkSpeed = 0.;
+	public var walkSpeedY = 0.;
 	var anims = dn.heaps.assets.Aseprite.getDict(hxd.Res.atlas.hero);
 
-	public var coins=0;
+	//Variable for inventory
+	public var inventory:Inventory;
 
-	public var turret:en.Turret;
-	public var gameStarted:Bool;
-
-	public function closeToTurret() : Bool{
-		return turret != null;
-	}
 
 	// This is TRUE if the player is not falling
 	var onGround(get,never) : Bool;
@@ -40,6 +35,9 @@ class Hero extends Entity {
 		frictX = 0;
 		frictY = 0;
 
+		//Start of the inventory
+		inventory = new Inventory();
+
 		// Camera tracks this
 		camera.trackEntity(this, true);
 		camera.clampToLevelBounds = true;
@@ -49,12 +47,11 @@ class Hero extends Entity {
 		ca.lockCondition = Game.isGameControllerLocked;
 
 		// Placeholder display
-		spr.set(Assets.hero);
-		spr.set("Idle");
+		spr.set(Assets.tilesDict.hero);
+		//spr.set("Idle");
 		spr.filter = new dn.heaps.filter.PixelOutline(0x00000, 1);
-		spr.anim.registerStateAnim(anims.Walk,1,1,()->M.fabs(dxTotal)>0.05);
-		spr.anim.registerStateAnim(anims.Idle,1,1,()->M.fabs(dxTotal)<0.04);
-
+		//spr.anim.registerStateAnim(anims.Walk,1,1,()->M.fabs(dxTotal)>0.05);
+		//spr.anim.registerStateAnim(anims.Idle,1,1,()->M.fabs(dxTotal)<0.04);
 		Game.ME.scroller.add(spr, Const.DP_FRONT);
 	}
 
@@ -62,17 +59,6 @@ class Hero extends Entity {
 	override function dispose() {
 		super.dispose();
 		ca.dispose(); // don't forget to dispose controller accesses
-	}
-	function turretStuff(){
-		if(closeToTurret()){
-			turret.spr.alpha = 1;
-			turret.say("Build your first turret here", Color.randomColor());
-			var d = distCase(turret);
-			if(d > 1.75){
-				turret.removeFromPlayer();
-				turret = null;
-			}
-		}
 	}
 
 	/** X collisions **/
@@ -129,25 +115,26 @@ class Hero extends Entity {
 			ca.rumble(0.05, 0.06);
 		}*/
 
-		if(!cd.has("shoot") && ca.isPressed(Shoot)){
-			if(!closeToTurret())return;
-			turret.enableTurret();
-			game.debug(Std.string(game.drop.dropSeed.random(15)));
-			if(!gameStarted){
-				gameStarted = true;
-				game.onGameStart();
-			}
-			cd.setS("shoot", .2);
+		if( ca.isPressed(Shoot) && !cd.has("spawn")){
+			game.createEnemy(5,5,10);
+			cd.setS("spawn", 1);
 		}
+		if( ca.isPressed(Jump) && !cd.has("jump")){
+			for(i in game.enemies){
+				i.hit(1, this);
+			}
+			cd.setS("jump", 1);
+		}
+
 
 		// Walk
 		if( ca.getAnalogDist(MoveX)>0) {
 			// As mentioned above, we don't touch physics values (eg. `dx`) here. We just store some "requested walk speed", which will be applied to actual physics in fixedUpdate.
 			walkSpeed = ca.getAnalogValue(MoveX); // -1 to 1
+			set_dir(Std.int(ca.getAnalogValue(MoveX)));
 		}
 
 		if( ca.getAnalogDist(MoveY)>0){
-
 			walkSpeedY = ca.getAnalogValue(MoveY);
 		}
 	}
@@ -155,7 +142,6 @@ class Hero extends Entity {
 
 	override function fixedUpdate() {
 		super.fixedUpdate();
-		turretStuff();
 
 		// Gravity
 		/*if( !onGround )
@@ -169,11 +155,48 @@ class Hero extends Entity {
 
 		// Apply requested walk movement
 		if( walkSpeed!=0 ) {
-			dx += walkSpeed * speed;
+			dx += walkSpeed * speed * tmod;
 		}
 
 		if(walkSpeedY!=0){
-			dy += walkSpeedY * speed;
+			dy += walkSpeedY * speed * tmod;
 		}
+	}
+}
+
+class Inventory{
+	public var items : Array<BaseItem> = [];
+
+	public function new(){
+		
+	}
+	public function getItem(s:String){
+		var item:BaseItem = null;
+		for(i in items){
+			if(i.itemName == s){
+				Game.ME.debug(Std.string("Found item :"+i.itemName));
+				item = i;
+			}
+		}
+		return item;
+	}
+	public function checkItems(){
+		for(i in items){
+			Game.ME.debug(Std.string("Found item :"+i.itemName));
+		}
+	}
+	public function addItem(i:BaseItem){
+		Game.ME.debug(Std.string("Added :"+i.itemName));
+		items.push(i);
+	}
+	public function removeItem(s:String){
+		var item:BaseItem = null;
+		for(i in items){
+			if(i.itemName == s){
+				Game.ME.debug(Std.string("Found item :"+i.itemName));
+				item = i;
+			}
+		}
+		items.remove(item);
 	}
 }

@@ -59,6 +59,7 @@ class DebugDrone extends Entity {
 		].join("\n");
 		help.setScale(Const.UI_SCALE);
 		help.x = 4*Const.UI_SCALE;
+		hpBar = new Entity.HpBar(this);
 
 		// <----- HERE: add your own specific inits, like setting drone gravity to zero, updating collision behaviors etc.
 	}
@@ -115,6 +116,14 @@ class DebugDrone extends Entity {
 			if( ca.isKeyboardPressed(K.ESCAPE) ) {
 				destroy();
 				return;
+			}
+			if( ca.isPressed(Shoot)){
+				game.createEnemy(5,5,10);
+			}
+			if( ca.isPressed(Jump)){
+				for(i in game.enemies){
+					i.hit(1, this);
+				}
 			}
 		}
 
