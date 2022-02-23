@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 46,
+	"nextUid": 51,
 	"worldLayout": "LinearHorizontal",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -291,7 +291,30 @@
 					"max": null,
 					"regex": null,
 					"acceptFileTypes": null,
-					"defaultOverride": null,
+					"defaultOverride": { "id": "V_Int", "params": [3] },
+					"textLanguageMode": null
+				},
+				{
+					"identifier": "spriteName",
+					"__type": "String",
+					"uid": 46,
+					"type": "F_String",
+					"isArray": false,
+					"canBeNull": true,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": {
+						"id": "V_String",
+						"params": ["enemy"]
+					},
 					"textLanguageMode": null
 				}
 			]
@@ -443,7 +466,73 @@
 					"max": null,
 					"regex": null,
 					"acceptFileTypes": null,
-					"defaultOverride": null,
+					"defaultOverride": {
+						"id": "V_String",
+						"params": ["coin"]
+					},
+					"textLanguageMode": null
+				},
+				{
+					"identifier": "moveToPlayer",
+					"__type": "Bool",
+					"uid": 47,
+					"type": "F_Bool",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": {
+						"id": "V_Bool",
+						"params": [ false ]
+					},
+					"textLanguageMode": null
+				},
+				{
+					"identifier": "magnet",
+					"__type": "Float",
+					"uid": 49,
+					"type": "F_Float",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": { "id": "V_Float", "params": [5] },
+					"textLanguageMode": null
+				},
+				{
+					"identifier": "speed",
+					"__type": "Float",
+					"uid": 50,
+					"type": "F_Float",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": { "id": "V_Float", "params": [0.3] },
 					"textLanguageMode": null
 				}
 			]
@@ -542,13 +631,16 @@
 							"height": 16,
 							"defUid": 27,
 							"px": [488,496],
-							"fieldInstances": [{
-								"__identifier": "Hp",
-								"__value": 5,
-								"__type": "Int",
-								"defUid": 45,
-								"realEditorValues": [{ "id": "V_Int", "params": [5] }]
-							}]
+							"fieldInstances": [
+								{
+									"__identifier": "Hp",
+									"__value": 5,
+									"__type": "Int",
+									"defUid": 45,
+									"realEditorValues": [{ "id": "V_Int", "params": [5] }]
+								},
+								{ "__identifier": "spriteName", "__value": "enemy", "__type": "String", "defUid": 46, "realEditorValues": [] }
+							]
 						},
 						{
 							"__identifier": "Text",
@@ -656,16 +748,30 @@
 							"height": 16,
 							"defUid": 43,
 							"px": [600,520],
-							"fieldInstances": [{
-								"__identifier": "ItemName",
-								"__value": "ItemTest",
-								"__type": "String",
-								"defUid": 44,
-								"realEditorValues": [{
-									"id": "V_String",
-									"params": ["ItemTest"]
-								}]
-							}]
+							"fieldInstances": [
+								{
+									"__identifier": "ItemName",
+									"__value": "coin",
+									"__type": "String",
+									"defUid": 44,
+									"realEditorValues": [{
+										"id": "V_String",
+										"params": ["coin"]
+									}]
+								},
+								{
+									"__identifier": "moveToPlayer",
+									"__value": true,
+									"__type": "Bool",
+									"defUid": 47,
+									"realEditorValues": [{
+										"id": "V_Bool",
+										"params": [ true ]
+									}]
+								},
+								{ "__identifier": "magnet", "__value": 5, "__type": "Float", "defUid": 49, "realEditorValues": [] },
+								{ "__identifier": "speed", "__value": 0.3, "__type": "Float", "defUid": 50, "realEditorValues": [] }
+							]
 						},
 						{
 							"__identifier": "Item",
@@ -676,16 +782,21 @@
 							"height": 16,
 							"defUid": 43,
 							"px": [584,568],
-							"fieldInstances": [{
-								"__identifier": "ItemName",
-								"__value": "Wood",
-								"__type": "String",
-								"defUid": 44,
-								"realEditorValues": [{
-									"id": "V_String",
-									"params": ["Wood"]
-								}]
-							}]
+							"fieldInstances": [
+								{
+									"__identifier": "ItemName",
+									"__value": "medkit",
+									"__type": "String",
+									"defUid": 44,
+									"realEditorValues": [{
+										"id": "V_String",
+										"params": ["medkit"]
+									}]
+								},
+								{ "__identifier": "moveToPlayer", "__value": false, "__type": "Bool", "defUid": 47, "realEditorValues": [] },
+								{ "__identifier": "magnet", "__value": 5, "__type": "Float", "defUid": 49, "realEditorValues": [] },
+								{ "__identifier": "speed", "__value": 0.3, "__type": "Float", "defUid": 50, "realEditorValues": [] }
+							]
 						}
 					]
 				},

@@ -11,21 +11,14 @@ class Enemy extends Entity {
 
 	// This is TRUE if the player is not falling
 
-	public function new(x:Int,y:Int,h:Int) {
+	public function new(x:Int,y:Int,h:Int, s:String) {
 		super(5,5);
-
-		// Start point using level entities
-		var start = level.data.l_Entities.all_Enemy[x];
-		if( start!=null )
-			setPosCase(start.cx, start.cy);
-		
-
 
 		//number = start.f_Integer;
 
 		// Placeholder display
 		spr.set(Assets.tiles);
-		spr.set("dino");
+		spr.set(s);
 		spr.filter = new dn.heaps.filter.PixelOutline(0x00000, 1);
 		spr.alpha = 1;
 		Game.ME.scroller.add(spr, Const.DP_MAIN);

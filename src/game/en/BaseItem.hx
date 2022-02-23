@@ -11,21 +11,25 @@ class BaseItem extends Entity {
 
 	var speed=0.3;
 	var distanceCheck = 1;
-	var playerDistanceMagnet = 5;
+	var playerDistanceMagnet = 5.;
 
-	public function new(x:Int,y:Int,z:String = "ItemBase") {
+	public function new(x:Int,y:Int,z:String = "coin", b:Bool, spd:Float, magnet:Float) {
 		super(x,y);
+
 		itemName = z;
+		moveToPlayer = b;
+		speed = spd;
+		playerDistanceMagnet = magnet;
 
 		// Sprite display
 
-		/*spr.set(Assets.tiles);
-		spr.set("coin");
+		spr.set(Assets.tiles);
+		spr.set(z);
 		spr.filter = new dn.heaps.filter.PixelOutline(0x00000, 1);
 		spr.setCenterRatio(0.5,0.5);
 		spr.alpha = 1;
 
-		Game.ME.scroller.add(spr, Const.DP_FRONT);*/
+		Game.ME.scroller.add(spr, Const.DP_FRONT);
 	}
 	override function update(){
 		if(!game.isPlaying)return;

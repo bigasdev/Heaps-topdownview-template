@@ -117,14 +117,6 @@ class DebugDrone extends Entity {
 				destroy();
 				return;
 			}
-			if( ca.isPressed(Shoot)){
-				game.createEnemy(5,5,10);
-			}
-			if( ca.isPressed(Jump)){
-				for(i in game.enemies){
-					i.hit(1, this);
-				}
-			}
 		}
 
 
