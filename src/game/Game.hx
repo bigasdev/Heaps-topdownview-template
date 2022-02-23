@@ -272,9 +272,9 @@ class Game extends Process {
 
 
 	//Function to debug
-	public function debug(str:String){
+	public function debug(str:Dynamic){
 		#if debug
-		trace(str);
+		trace(Std.string(str));
 		#end
 	}
 }

@@ -251,125 +251,8 @@
 			"fieldDefs": []
 		},
 		{
-			"identifier": "Turret",
-			"uid": 24,
-			"tags": [],
-			"width": 16,
-			"height": 16,
-			"resizableX": false,
-			"resizableY": false,
-			"keepAspectRatio": false,
-			"fillOpacity": 1,
-			"lineOpacity": 1,
-			"hollow": false,
-			"color": "#94D9B3",
-			"renderMode": "Rectangle",
-			"showName": true,
-			"tilesetId": null,
-			"tileId": null,
-			"tileRenderMode": "FitInside",
-			"maxCount": 0,
-			"limitScope": "PerLevel",
-			"limitBehavior": "MoveLastOne",
-			"pivotX": 0.5,
-			"pivotY": 1,
-			"fieldDefs": [
-				{
-					"identifier": "Integer",
-					"__type": "Int",
-					"uid": 26,
-					"type": "F_Int",
-					"isArray": false,
-					"canBeNull": false,
-					"arrayMinLength": null,
-					"arrayMaxLength": null,
-					"editorDisplayMode": "Hidden",
-					"editorDisplayPos": "Above",
-					"editorAlwaysShow": false,
-					"editorCutLongValues": true,
-					"min": null,
-					"max": null,
-					"regex": null,
-					"acceptFileTypes": null,
-					"defaultOverride": null,
-					"textLanguageMode": null
-				}
-			]
-		},
-		{
 			"identifier": "Enemy",
 			"uid": 27,
-			"tags": [],
-			"width": 16,
-			"height": 16,
-			"resizableX": false,
-			"resizableY": false,
-			"keepAspectRatio": false,
-			"fillOpacity": 1,
-			"lineOpacity": 1,
-			"hollow": false,
-			"color": "#94D9B3",
-			"renderMode": "Rectangle",
-			"showName": true,
-			"tilesetId": null,
-			"tileId": null,
-			"tileRenderMode": "FitInside",
-			"maxCount": 0,
-			"limitScope": "PerLevel",
-			"limitBehavior": "MoveLastOne",
-			"pivotX": 0.5,
-			"pivotY": 1,
-			"fieldDefs": []
-		},
-		{
-			"identifier": "Waypoint",
-			"uid": 28,
-			"tags": [],
-			"width": 16,
-			"height": 16,
-			"resizableX": false,
-			"resizableY": false,
-			"keepAspectRatio": false,
-			"fillOpacity": 1,
-			"lineOpacity": 1,
-			"hollow": false,
-			"color": "#94D9B3",
-			"renderMode": "Rectangle",
-			"showName": true,
-			"tilesetId": null,
-			"tileId": null,
-			"tileRenderMode": "FitInside",
-			"maxCount": 0,
-			"limitScope": "PerLevel",
-			"limitBehavior": "MoveLastOne",
-			"pivotX": 0.5,
-			"pivotY": 1,
-			"fieldDefs": [
-				{
-					"identifier": "Integer",
-					"__type": "Int",
-					"uid": 29,
-					"type": "F_Int",
-					"isArray": false,
-					"canBeNull": false,
-					"arrayMinLength": null,
-					"arrayMaxLength": null,
-					"editorDisplayMode": "Hidden",
-					"editorDisplayPos": "Above",
-					"editorAlwaysShow": false,
-					"editorCutLongValues": true,
-					"min": null,
-					"max": null,
-					"regex": null,
-					"acceptFileTypes": null,
-					"defaultOverride": null,
-					"textLanguageMode": null
-				}
-			]
-		},
-		{
-			"identifier": "Protect",
-			"uid": 34,
 			"tags": [],
 			"width": 16,
 			"height": 16,
@@ -584,296 +467,14 @@
 					"gridTiles": [],
 					"entityInstances": [
 						{
-							"__identifier": "Turret",
-							"__grid": [25,29],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 24,
-							"px": [408,480],
-							"fieldInstances": [{ "__identifier": "Integer", "__value": 0, "__type": "Int", "defUid": 26, "realEditorValues": [] }]
-						},
-						{
-							"__identifier": "Turret",
-							"__grid": [35,29],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 24,
-							"px": [568,480],
-							"fieldInstances": [{ "__identifier": "Integer", "__value": 0, "__type": "Int", "defUid": 26, "realEditorValues": [] }]
-						},
-						{
-							"__identifier": "Turret",
-							"__grid": [44,29],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 24,
-							"px": [712,480],
-							"fieldInstances": [{ "__identifier": "Integer", "__value": 0, "__type": "Int", "defUid": 26, "realEditorValues": [] }]
-						},
-						{
-							"__identifier": "Turret",
-							"__grid": [30,33],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 24,
-							"px": [488,544],
-							"fieldInstances": [{ "__identifier": "Integer", "__value": 0, "__type": "Int", "defUid": 26, "realEditorValues": [] }]
-						},
-						{
-							"__identifier": "Turret",
-							"__grid": [40,26],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 24,
-							"px": [648,432],
-							"fieldInstances": [{ "__identifier": "Integer", "__value": 0, "__type": "Int", "defUid": 26, "realEditorValues": [] }]
-						},
-						{
-							"__identifier": "Turret",
-							"__grid": [52,29],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 24,
-							"px": [840,480],
-							"fieldInstances": [{ "__identifier": "Integer", "__value": 0, "__type": "Int", "defUid": 26, "realEditorValues": [] }]
-						},
-						{
-							"__identifier": "Turret",
-							"__grid": [58,33],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 24,
-							"px": [936,544],
-							"fieldInstances": [{ "__identifier": "Integer", "__value": 0, "__type": "Int", "defUid": 26, "realEditorValues": [] }]
-						},
-						{
-							"__identifier": "Turret",
-							"__grid": [64,29],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 24,
-							"px": [1032,480],
-							"fieldInstances": [{ "__identifier": "Integer", "__value": 0, "__type": "Int", "defUid": 26, "realEditorValues": [] }]
-						},
-						{
-							"__identifier": "Turret",
-							"__grid": [70,26],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 24,
-							"px": [1128,432],
-							"fieldInstances": [{ "__identifier": "Integer", "__value": 0, "__type": "Int", "defUid": 26, "realEditorValues": [] }]
-						},
-						{
-							"__identifier": "Turret",
-							"__grid": [75,29],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 24,
-							"px": [1208,480],
-							"fieldInstances": [{ "__identifier": "Integer", "__value": 0, "__type": "Int", "defUid": 26, "realEditorValues": [] }]
-						},
-						{
-							"__identifier": "Turret",
-							"__grid": [80,33],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 24,
-							"px": [1288,544],
-							"fieldInstances": [{ "__identifier": "Integer", "__value": 0, "__type": "Int", "defUid": 26, "realEditorValues": [] }]
-						},
-						{
 							"__identifier": "Enemy",
-							"__grid": [10,31],
+							"__grid": [30,30],
 							"__pivot": [0.5,1],
 							"__tile": null,
 							"width": 16,
 							"height": 16,
 							"defUid": 27,
-							"px": [168,512],
-							"fieldInstances": []
-						},
-						{
-							"__identifier": "Enemy",
-							"__grid": [14,47],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 27,
-							"px": [232,768],
-							"fieldInstances": []
-						},
-						{
-							"__identifier": "Enemy",
-							"__grid": [13,9],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 27,
-							"px": [216,160],
-							"fieldInstances": []
-						},
-						{
-							"__identifier": "Enemy",
-							"__grid": [14,9],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 27,
-							"px": [232,160],
-							"fieldInstances": []
-						},
-						{
-							"__identifier": "Enemy",
-							"__grid": [15,9],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 27,
-							"px": [248,160],
-							"fieldInstances": []
-						},
-						{
-							"__identifier": "Enemy",
-							"__grid": [15,47],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 27,
-							"px": [248,768],
-							"fieldInstances": []
-						},
-						{
-							"__identifier": "Enemy",
-							"__grid": [16,47],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 27,
-							"px": [264,768],
-							"fieldInstances": []
-						},
-						{
-							"__identifier": "Enemy",
-							"__grid": [17,47],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 27,
-							"px": [280,768],
-							"fieldInstances": []
-						},
-						{
-							"__identifier": "Enemy",
-							"__grid": [16,9],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 27,
-							"px": [264,160],
-							"fieldInstances": []
-						},
-						{
-							"__identifier": "Waypoint",
-							"__grid": [21,31],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 28,
-							"px": [344,512],
-							"fieldInstances": [{ "__identifier": "Integer", "__value": 0, "__type": "Int", "defUid": 29, "realEditorValues": [] }]
-						},
-						{
-							"__identifier": "Waypoint",
-							"__grid": [44,31],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 28,
-							"px": [712,512],
-							"fieldInstances": [{
-								"__identifier": "Integer",
-								"__value": 1,
-								"__type": "Int",
-								"defUid": 29,
-								"realEditorValues": [{ "id": "V_Int", "params": [1] }]
-							}]
-						},
-						{
-							"__identifier": "Waypoint",
-							"__grid": [64,31],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 28,
-							"px": [1032,512],
-							"fieldInstances": [{
-								"__identifier": "Integer",
-								"__value": 2,
-								"__type": "Int",
-								"defUid": 29,
-								"realEditorValues": [{ "id": "V_Int", "params": [2] }]
-							}]
-						},
-						{
-							"__identifier": "Waypoint",
-							"__grid": [81,31],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 28,
-							"px": [1304,512],
-							"fieldInstances": [{
-								"__identifier": "Integer",
-								"__value": 3,
-								"__type": "Int",
-								"defUid": 29,
-								"realEditorValues": [{ "id": "V_Int", "params": [3] }]
-							}]
-						},
-						{
-							"__identifier": "Protect",
-							"__grid": [84,31],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 34,
-							"px": [1352,512],
+							"px": [488,496],
 							"fieldInstances": []
 						},
 						{
@@ -895,14 +496,12 @@
 								},
 								{
 									"__identifier": "String",
-									"__value": "Use the turrets and perks to your advantage, but remember every buff comes with a nerf.",
+									"__value": "You can edit these texts in the ldt to create texts",
 									"__type": "String",
 									"defUid": 37,
 									"realEditorValues": [{
 										"id": "V_String",
-										"params": [
-											"Use the turrets and perks to your advantage, but remember every buff comes with a nerf."
-										]
+										"params": ["You can edit these texts in the ldt to create texts"]
 									}]
 								},
 								{
@@ -937,12 +536,12 @@
 								{ "__identifier": "Integer", "__value": 0, "__type": "Int", "defUid": 36, "realEditorValues": [] },
 								{
 									"__identifier": "String",
-									"__value": "Project doom was a game created in 72hs for the magejam2022",
+									"__value": "Welcome!",
 									"__type": "String",
 									"defUid": 37,
 									"realEditorValues": [{
 										"id": "V_String",
-										"params": ["Project doom was a game created in 72hs for the magejam2022"]
+										"params": ["Welcome!"]
 									}]
 								},
 								{
@@ -973,87 +572,6 @@
 							"height": 16,
 							"defUid": 21,
 							"px": [488,448],
-							"fieldInstances": []
-						},
-						{
-							"__identifier": "Text",
-							"__grid": [83,28],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 35,
-							"px": [1336,464],
-							"fieldInstances": [
-								{
-									"__identifier": "Integer",
-									"__value": 2,
-									"__type": "Int",
-									"defUid": 36,
-									"realEditorValues": [{ "id": "V_Int", "params": [2] }]
-								},
-								{
-									"__identifier": "String",
-									"__value": "You should protect this with your life.",
-									"__type": "String",
-									"defUid": 37,
-									"realEditorValues": [{
-										"id": "V_String",
-										"params": ["You should protect this with your life."]
-									}]
-								},
-								{
-									"__identifier": "Color",
-									"__value": "#00FF09",
-									"__type": "Color",
-									"defUid": 38,
-									"realEditorValues": [{ "id": "V_Int", "params": [65289] }]
-								},
-								{ "__identifier": "willBeRemoved", "__value": false, "__type": "Bool", "defUid": 39, "realEditorValues": [] }
-							]
-						},
-						{
-							"__identifier": "Enemy",
-							"__grid": [17,9],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 27,
-							"px": [280,160],
-							"fieldInstances": []
-						},
-						{
-							"__identifier": "Enemy",
-							"__grid": [18,47],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 27,
-							"px": [296,768],
-							"fieldInstances": []
-						},
-						{
-							"__identifier": "Enemy",
-							"__grid": [19,47],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 27,
-							"px": [312,768],
-							"fieldInstances": []
-						},
-						{
-							"__identifier": "Enemy",
-							"__grid": [18,9],
-							"__pivot": [0.5,1],
-							"__tile": null,
-							"width": 16,
-							"height": 16,
-							"defUid": 27,
-							"px": [296,160],
 							"fieldInstances": []
 						}
 					]

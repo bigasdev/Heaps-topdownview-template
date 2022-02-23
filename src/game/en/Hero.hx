@@ -113,14 +113,10 @@ class Hero extends Entity {
 			ca.rumble(0.05, 0.06);
 		}*/
 
-		if( ca.isPressed(Shoot) && !cd.has("spawn")){
-			game.createEnemy(5,5,10);
-			cd.setS("spawn", 1);
+		if( ca.isPressed(Shoot) && !cd.has("shoot")){
+			cd.setS("shoot", 1);
 		}
 		if( ca.isPressed(Jump) && !cd.has("jump")){
-			for(i in game.enemies){
-				i.hit(1, this);
-			}
 			cd.setS("jump", 1);
 		}
 
@@ -179,6 +175,7 @@ class Inventory{
 		return item;
 	}
 	public function checkItems(){
+		//Add your logic to read the items here.
 		for(i in items){
 			Game.ME.debug(Std.string("Found item :"+i.itemName));
 		}

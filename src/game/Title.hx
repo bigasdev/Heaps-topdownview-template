@@ -82,12 +82,12 @@ class Title extends Process {
 
 		//@ Text
 		var tf = new h2d.Text(Assets.fontPixelSmall);
-		tf.text = "@ bigasdev\nVERSION 0.1";
+		tf.text = "@ your project\nVERSION 0.1";
 		tf.dropShadow = {dx:1,dy:1,color: 0, alpha:1};
 		root.add(tf, Const.DP_UI);
 		tf.y = 525;
 		tf.x = 325;
-		tf.scaleX = 2;
+		tf.scaleX = 2; 
 		tf.scaleY = 2;
 		tf.alpha = .5;
 		tf.textColor = 0xffffff;
