@@ -47,11 +47,9 @@ class Hero extends Entity {
 		ca.lockCondition = Game.isGameControllerLocked;
 
 		// Placeholder display
-		spr.set(Assets.tilesDict.hero);
-		//spr.set("Idle");
 		spr.filter = new dn.heaps.filter.PixelOutline(0x00000, 1);
-		//spr.anim.registerStateAnim(anims.Walk,1,1,()->M.fabs(dxTotal)>0.05);
-		//spr.anim.registerStateAnim(anims.Idle,1,1,()->M.fabs(dxTotal)<0.04);
+		spr.anim.registerStateAnim(anims.Walk,1,1,()->M.fabs(dxTotal)>0.05);
+		spr.anim.registerStateAnim(anims.Idle,1,1,()->M.fabs(dxTotal)<0.04);
 		Game.ME.scroller.add(spr, Const.DP_FRONT);
 	}
 

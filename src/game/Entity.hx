@@ -920,7 +920,7 @@ class HpBar{
 	public function updateBar(){
 		hpBorder.removeChildren();
 		for(i in 0...lifes){
-			var a = Assets.tiles.h_get("hpBar1", hpBorder);
+			var a = Assets.tiles.h_get("heart", hpBorder);
 			a.filter = new dn.heaps.filter.PixelOutline(0x00000, 1);
 			a.alpha = 1;
 		}
