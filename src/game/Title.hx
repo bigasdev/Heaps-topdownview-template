@@ -11,6 +11,8 @@ class Title extends Process {
 	public var texts : Array<h2d.Text> = [];
 	public var sprite: h2d.Object;
 
+	var gameInstance: Null<Game>;
+
 	var done = false;
 	var speed = 0.02;
 
@@ -119,7 +121,7 @@ class Title extends Process {
 				t.color.g = M.fmax(-1, t.color.g - speed*tmod );
 				t.color.b = M.fmax(-1, t.color.b - speed*tmod );
 				if( t.color.r<=-1 && t.color.g<=-1 && t.color.b<=-1) {
-					new sample.SampleGame();
+					if(gameInstance == null) gameInstance = new sample.SampleGame();
 					destroy();
 				}
 			}

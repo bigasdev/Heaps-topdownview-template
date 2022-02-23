@@ -39,7 +39,7 @@ class Hero extends Entity {
 		inventory = new Inventory();
 
 		// Camera tracks this
-		camera.trackEntity(this, true);
+		camera.trackEntity(this, false);
 		camera.clampToLevelBounds = true;
 
 		// Init controller
@@ -48,8 +48,8 @@ class Hero extends Entity {
 
 		// Placeholder display
 		spr.filter = new dn.heaps.filter.PixelOutline(0x00000, 1);
-		spr.anim.registerStateAnim(anims.Walk,1,1,()->M.fabs(dxTotal)>0.05);
-		spr.anim.registerStateAnim(anims.Idle,1,1,()->M.fabs(dxTotal)<0.04);
+		//spr.anim.registerStateAnim(anims.Walk,1,1,()->M.fabs(dxTotal)>0.05);
+		//spr.anim.registerStateAnim(anims.Idle,1,1,()->M.fabs(dxTotal)<0.04);
 		Game.ME.scroller.add(spr, Const.DP_FRONT);
 	}
 

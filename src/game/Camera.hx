@@ -1,5 +1,5 @@
 class Camera extends dn.Process {
-	public static var MIN_ZOOM : Float = 1;
+	public static var MIN_ZOOM : Float = .3;
 	public static var MAX_ZOOM : Float = 10;
 
 
@@ -35,7 +35,7 @@ class Camera extends dn.Process {
 	var bumpZoomFactor = 0.;
 
 	/** Actual zoom value without modifiers **/
-	var baseZoom = 1.;
+	var baseZoom = .7;
 	var zoomSpeed = 0.0014;
 	var zoomFrict = 0.9;
 
@@ -43,7 +43,7 @@ class Camera extends dn.Process {
 	public var zoom(get,never) : Float;
 
 	/** Target base zoom value **/
-	public var targetZoom(default,set) = 1.;
+	public var targetZoom(default,set) = .7;
 
 	/** Speed multiplier when camera is tracking a target **/
 	var trackingSpeed = 5.5;
