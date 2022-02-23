@@ -1,0 +1,28 @@
+Null access
+BUILD: 2022-02-06-00-28-54--hldx-64
+EXCEPTION:
+
+Called from Fx.bigExplode (Fx.hx line 186)
+Called from en.Enemy.beforeDestroy (en/Enemy.hx line 61)
+Called from Entity.destroy (Entity.hx line 394)
+Called from Game.onDispose (Game.hx line 207)
+Called from dn.$Process._disposeProcess (dn/Process.hx line 604)
+Called from dn.$Process._garbageCollector (dn/Process.hx line 566)
+Called from dn.$Process._disposeProcess (dn/Process.hx line 578)
+Called from dn.$Process._garbageCollector (dn/Process.hx line 566)
+Called from dn.$Process.updateAll (dn/Process.hx line 653)
+Called from Boot.update (Boot.hx line 62)
+Called from Boot.update (Boot.hx line 58)
+CALL:
+
+Called from $App.onCrash (App.hx line 57)
+Called from $App.onCrash (App.hx line 51)
+Called from Boot.update (Boot.hx line 69)
+Called from hxd.App.mainLoop (hxd/App.hx line 193)
+Called from hxd.$System.mainLoop (hxd/System.hl.hx line 76)
+Called from hxd.$System.runMainLoop (hxd/System.hl.hx line 158)
+Called from hxd.$System.runMainLoop (hxd/System.hl.hx line 142)
+Called from haxe.$Timer.~delay.0 (C:\HaxeToolkit\haxe\std/haxe/Timer.hx line 144)
+Called from haxe.$Timer.~__constructor__.0 (C:\HaxeToolkit\haxe\std/haxe/Timer.hx line 76)
+Called from sys.thread.EventLoop.loop (C:\HaxeToolkit\haxe\std/sys/thread/EventLoop.hx line 150)
+Called from sys.thread._Thread.$Thread_Impl_.processEvents (C:\HaxeToolkit\haxe\std/hl/_std/sys/thread/Thread.hx line 62)
