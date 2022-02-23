@@ -259,13 +259,15 @@ class Game extends Process {
 	//Function to create an item and add it to the list, might be useful for controlling stuff
 	public function createItem(x:Int, y:Int, s:String){
 		var i = new BaseItem(x,y,s);
-		debug(Std.string("Created + "+i));
+		i.setPosCase(x,y);
+		debug(Std.string("Created + "+s));
 		itemsCreated.push(i);
 	}
 
 	//Function to create the enemy and add it to the list
 	public function createEnemy(x:Int, y:Int, h:Int){
 		var i = new en.Enemy(x,y,h);
+		i.setPosCase(x,y);
 		debug(Std.string("Created + "+i));
 		enemies.push(i);
 	}

@@ -16,6 +16,12 @@ class SampleGame extends Game {
 		for(i in level.data.l_Entities.all_Text){
 			createText(i.f_String, i.f_Color_int, i.cx, i.cy, i.f_willBeRemoved);
 		}
+		for(i in level.data.l_Entities.all_Enemy){
+			createEnemy(i.cx,i.cy,i.f_Hp);
+		}
+		for(i in level.data.l_Entities.all_Item){
+			createItem(i.cx, i.cy, i.f_ItemName);
+		}
 	}
 
 	override function postUpdate(){

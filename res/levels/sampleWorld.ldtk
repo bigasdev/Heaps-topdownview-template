@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 43,
+	"nextUid": 46,
 	"worldLayout": "LinearHorizontal",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -262,7 +262,7 @@
 			"fillOpacity": 1,
 			"lineOpacity": 1,
 			"hollow": false,
-			"color": "#94D9B3",
+			"color": "#FF0000",
 			"renderMode": "Rectangle",
 			"showName": true,
 			"tilesetId": null,
@@ -273,7 +273,28 @@
 			"limitBehavior": "MoveLastOne",
 			"pivotX": 0.5,
 			"pivotY": 1,
-			"fieldDefs": []
+			"fieldDefs": [
+				{
+					"identifier": "Hp",
+					"__type": "Int",
+					"uid": 45,
+					"type": "F_Int",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": null,
+					"textLanguageMode": null
+				}
+			]
 		},
 		{
 			"identifier": "Text",
@@ -366,6 +387,52 @@
 					"type": "F_Bool",
 					"isArray": false,
 					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": null,
+					"textLanguageMode": null
+				}
+			]
+		},
+		{
+			"identifier": "Item",
+			"uid": 43,
+			"tags": [],
+			"width": 16,
+			"height": 16,
+			"resizableX": false,
+			"resizableY": false,
+			"keepAspectRatio": false,
+			"fillOpacity": 1,
+			"lineOpacity": 1,
+			"hollow": false,
+			"color": "#A700FF",
+			"renderMode": "Cross",
+			"showName": true,
+			"tilesetId": null,
+			"tileId": null,
+			"tileRenderMode": "Stretch",
+			"maxCount": 0,
+			"limitScope": "PerLevel",
+			"limitBehavior": "MoveLastOne",
+			"pivotX": 0.5,
+			"pivotY": 0.5,
+			"fieldDefs": [
+				{
+					"identifier": "ItemName",
+					"__type": "String",
+					"uid": 44,
+					"type": "F_String",
+					"isArray": false,
+					"canBeNull": true,
 					"arrayMinLength": null,
 					"arrayMaxLength": null,
 					"editorDisplayMode": "Hidden",
@@ -475,7 +542,13 @@
 							"height": 16,
 							"defUid": 27,
 							"px": [488,496],
-							"fieldInstances": []
+							"fieldInstances": [{
+								"__identifier": "Hp",
+								"__value": 5,
+								"__type": "Int",
+								"defUid": 45,
+								"realEditorValues": [{ "id": "V_Int", "params": [5] }]
+							}]
 						},
 						{
 							"__identifier": "Text",
@@ -573,6 +646,46 @@
 							"defUid": 21,
 							"px": [488,448],
 							"fieldInstances": []
+						},
+						{
+							"__identifier": "Item",
+							"__grid": [37,32],
+							"__pivot": [0.5,0.5],
+							"__tile": null,
+							"width": 16,
+							"height": 16,
+							"defUid": 43,
+							"px": [600,520],
+							"fieldInstances": [{
+								"__identifier": "ItemName",
+								"__value": "ItemTest",
+								"__type": "String",
+								"defUid": 44,
+								"realEditorValues": [{
+									"id": "V_String",
+									"params": ["ItemTest"]
+								}]
+							}]
+						},
+						{
+							"__identifier": "Item",
+							"__grid": [36,35],
+							"__pivot": [0.5,0.5],
+							"__tile": null,
+							"width": 16,
+							"height": 16,
+							"defUid": 43,
+							"px": [584,568],
+							"fieldInstances": [{
+								"__identifier": "ItemName",
+								"__value": "Wood",
+								"__type": "String",
+								"defUid": 44,
+								"realEditorValues": [{
+									"id": "V_String",
+									"params": ["Wood"]
+								}]
+							}]
 						}
 					]
 				},
